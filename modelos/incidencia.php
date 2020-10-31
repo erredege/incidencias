@@ -96,7 +96,7 @@
                         OR incidencias.idUsuario LIKE '%$textoBusqueda%'
                         OR incidencias.estado LIKE '%$textoBusqueda%'
                         OR incidencias.descripcion LIKE '%$textoBusqueda%'
-                        ORDER BY incidencias.idIncidencias")) {
+                        ORDER BY incidencias.fecha")) {
                 while ($fila = $result->fetch_object()) {
                     $arrayResult[] = $fila;
                 }

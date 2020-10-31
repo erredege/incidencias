@@ -14,21 +14,21 @@ echo "<form action = 'index.php' method = 'get'>
         Observaciones:<input type='text' name='observaciones' value='$incidencia->observaciones'><br>
         Estado:"; if ($incidencia->estado ==  'abierta'){
                     echo "<select name='estado'>
-							<option value='abierta' selected >ABIERTA</option>
-							<option value='encurso'>EN CURSO</option>
-							<option value='cerrada'>CERRADA</option> 
+							<option value='ABIERTA' selected >ABIERTA</option>
+							<option value='EN CURSO'>EN CURSO</option>
+							<option value='CERRADA'>CERRADA</option> 
                         </select><br>";
                 }else if($incidencia->estado ==  'encurso'){
                     echo "<select name='estado'>
-							<option value='abierta' >ABIERTA</option>
-							<option value='encurso' selected>EN CURSO</option>
-							<option value='cerrada'>CERRADA</option> 
+							<option value='ABIERTA' >ABIERTA</option>
+							<option value='EN CURSO' selected>EN CURSO</option>
+							<option value='CERRADA'>CERRADA</option> 
                     </select><br>";
                 }else{
                     echo "<select name='estado'>
-							<option value='abierta'>ABIERTA</option>
-							<option value='encurso'>EN CURSO</option>
-							<option value='cerrada' selected>CERRADA</option> 
+							<option value='ABIERTA'>ABIERTA</option>
+							<option value='EN CURSO'>EN CURSO</option>
+							<option value='CERRADA' selected>CERRADA</option> 
                         </select><br>";
                 }
         echo "Descripcion:<input type='text' name='descripcion' value='$incidencia->descripcion'><br>"; 

@@ -2,7 +2,7 @@
 	echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias</h1></a></p>";
 	// Mostramos info del usuario logueado (si hay alguno)
 	if (isset($_SESSION['idUsuario'])) {
-		echo "<p>Hola, ".$_SESSION['nombre']."</p>";
+		echo "<p>Sesion iniciada como, ".$_SESSION['nombre']."</p>";
 	}
 	// Mostramos mensaje de error o de informaci�n (si hay alguno)
 	if (isset($data['msjError'])) {

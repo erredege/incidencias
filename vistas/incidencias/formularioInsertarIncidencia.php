@@ -9,9 +9,9 @@
 						Equipo:<input type='text' name='equipo'><br>
 						Observaciones:<input type='text' name='observaciones'><br>";
 						echo "Estado: <select name='estado'>
-							<option value='abierta' selected>ABIERTA</option>
-							<option value='encurso'>EN CURSO</option>
-							<option value='cerrada'>CERRADA</option> 
+							<option value='ABIERTA' selected>ABIERTA</option>
+							<option value='EN CURSO'>EN CURSO</option>
+							<option value='CERRADA'>CERRADA</option> 
 						</select><br>
 						Descripcion:<input type='text' name='descripcion'><br>";
 
