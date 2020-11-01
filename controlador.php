@@ -47,7 +47,8 @@
 
         public function mostrarListaIncidencias() {
 			$data['listaIncidencias'] = $this->incidencia->getAll();
-			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+			$data2['tipoUser'] = $this->usuario->getTipo();
+			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data, $data2);
         }
 
 			// --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------

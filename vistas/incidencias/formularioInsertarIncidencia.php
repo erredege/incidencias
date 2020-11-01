@@ -11,7 +11,6 @@
 						echo "Estado: <select name='estado'>
 							<option value='ABIERTA' selected>ABIERTA</option>
 							<option value='EN CURSO'>EN CURSO</option>
-							<option value='CERRADA'>CERRADA</option> 
 						</select><br>
 						Descripcion:<input type='text' name='descripcion'><br>";
 

@@ -21,13 +21,15 @@
 	}
 	
 	// Primero, el formulario de busqueda
-	echo "<form action='index.php'>
-			<input type='hidden' name='action' value='buscarLibros'>
-			BUSCAR POR:
-			<input type='text' name='textoBusqueda' placeholder='descripción, id del usuario, estado, fecha, lugar o equipo' size='50'>
-			<input type='submit' value='Buscar'>
-		</form><br>";
-	
+	if ($_SESSION['tipo'] == '0'){
+		echo "<form action='index.php'>
+				<input type='hidden' name='action' value='buscarLibros'>
+				BUSCAR POR:
+				<input type='text' name='textoBusqueda' placeholder='descripción, id del usuario, estado, fecha, lugar o equipo' size='50'>
+				<input type='submit' value='Buscar'>
+			</form><br>";
+	}
+
 	if (count($data['listaIncidencias']) > 0) {
 
 		// Ahora, la tabla con los datos de los libros
@@ -44,7 +46,7 @@
 					echo "<td colspan='2'>Opciones</td>";
 				}
 			echo "</tr>";
-
+		
 		foreach($data['listaIncidencias'] as $incidencias) {
 				echo "<tr>";
 					echo "<td>".$incidencias->fecha."</td>";

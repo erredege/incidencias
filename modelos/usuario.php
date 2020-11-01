@@ -7,7 +7,7 @@
 
         public function buscarUsuario($nombre,$password) {
 
-            if ($result = $this->db->query("SELECT idUsuario, nombre FROM usuarios WHERE nombre = '$nombre' AND password = '$password'")) {
+            if ($result = $this->db->query("SELECT idUsuario, nombre  FROM usuarios WHERE nombre = '$nombre' AND password = '$password'")) {
                 if ($result->num_rows == 1) {
                     $usuario = $result->fetch_object();
                     // Iniciamos la sesion
@@ -21,6 +21,16 @@
                 return false;
             }
 
+        }
+
+        public function getTipo($id){
+            $arrayResult = array();
+            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsario = '$id'")) {
+                $arrayResult[] = $result->fetch_object();
+            } else {
+                $arrayResult = null;
+            }
+            return $arrayResult;
         }
 
         public function get($id) {
@@ -45,9 +55,9 @@
             return $arrayResult;
         }
 
-        public function insert($nombre, $password) {
-            $this->db->query("INSERT INTO usuarios (nombre,password) 
-                        VALUES ('$nombre', '$password')");        
+        public function insert($nombre, $password, $tipo) {
+            $this->db->query("INSERT INTO usuarios (nombre,password,tipo) 
+                        VALUES ('$nombre', '$password', '$tipo')");        
             return $this->db->affected_rows;
         }
 
