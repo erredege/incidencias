@@ -25,7 +25,7 @@
 
         public function getTipo($id){
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsario = '$id'")) {
+            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsario = '$id '")) {
                 $arrayResult[] = $result->fetch_object();
             } else {
                 $arrayResult = null;
