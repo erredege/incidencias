@@ -7,12 +7,13 @@
 
         public function buscarUsuario($nombre,$password) {
 
-            if ($result = $this->db->query("SELECT idUsuario, nombre  FROM usuarios WHERE nombre = '$nombre' AND password = '$password'")) {
+            if ($result = $this->db->query("SELECT idUsuario, nombre, tipo  FROM usuarios WHERE nombre = '$nombre' AND password = '$password'")) {
                 if ($result->num_rows == 1) {
                     $usuario = $result->fetch_object();
                     // Iniciamos la sesion
                     $_SESSION["idUsuario"] = $usuario->idUsuario;
                     $_SESSION["nombre"] = $usuario->nombre;
+                    $_SESSION["tipo"] = $useuario->tipo;
                     return true;
                 } else {
                     return false;
@@ -23,9 +24,9 @@
 
         }
 
-        public function getTipo($id){
+        public function getTipo($idUsuario){
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsario = '$id '")) {
+            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsuario = '$idUsuario'")) {
                 $arrayResult[] = $result->fetch_object();
             } else {
                 $arrayResult = null;
@@ -33,9 +34,9 @@
             return $arrayResult;
         }
 
-        public function get($id) {
+        public function get($idUsuario) {
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT * FROM usuarios WHERE usuarios.idUsario = '$id'")) {
+            if ($result = $this->db->query("SELECT * FROM usuarios WHERE usuarios.idUsario = '$idUsuario'")) {
                 $arrayResult[] = $result->fetch_object();
             } else {
                 $arrayResult = null;
@@ -65,7 +66,7 @@
         }
 
         public function delete() {
-            $this->db->query("DELETE FROM usuarios WHERE idUsuario = '$id'");
+            $this->db->query("DELETE FROM usuarios WHERE idUsuario = '$idUsuario'");
             return $this->db->affected_rows;
         }
 

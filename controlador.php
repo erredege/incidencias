@@ -46,9 +46,10 @@
 			// --------------------------------- MOSTRAR LISTA DE LIBROS ----------------------------------------
 
         public function mostrarListaIncidencias() {
+			$idUsuario = $_REQUEST["idUsuario"];
 			$data['listaIncidencias'] = $this->incidencia->getAll();
-			$data2['tipoUser'] = $this->usuario->getTipo();
-			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data, $data2);
+			$data['tipoUser'] = $this->usuario->getTipo($idUsuario);
+			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
         }
 
 			// --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
@@ -169,6 +170,7 @@
 				
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$data['incidencia'] = $this->incidencia->get($idIncidencia);
+				$data['usuario'] = $this->usuario->get($idUsuario);
 				//$data['listaAutoresLibro'] = $this->libro->getAutores($idLibro);
 				//$data['listaTodosLosAutores'] = $this->persona->getAll();
 				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data);
