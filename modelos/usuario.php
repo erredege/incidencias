@@ -36,7 +36,7 @@
 
         public function get($idUsuario) {
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT * FROM usuarios WHERE usuarios.idUsario = '$idUsuario'")) {
+            if ($result = $this->db->query("SELECT * FROM usuarios WHERE usuarios.idUsuario = '$idUsuario'")) {
                 $arrayResult[] = $result->fetch_object();
             } else {
                 $arrayResult = null;

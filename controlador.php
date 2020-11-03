@@ -46,7 +46,7 @@
 			// --------------------------------- MOSTRAR LISTA DE LIBROS ----------------------------------------
 
         public function mostrarListaIncidencias() {
-			$idUsuario = $_REQUEST["idUsuario"];
+			$idUsuario = $_SESSION["idUsuario"];
 			$data['listaIncidencias'] = $this->incidencia->getAll();
 			$data['tipoUser'] = $this->usuario->getTipo($idUsuario);
 			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
@@ -167,13 +167,14 @@
 
 		public function formularioModificarIncidencia() {
 			if (isset($_SESSION["idUsuario"])) {
-				
+
+				$idUsuario = $_SESSION["idUsuario"];
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$data['incidencia'] = $this->incidencia->get($idIncidencia);
-				$data['usuario'] = $this->usuario->get($idUsuario);
+				$data2['usuario'] = $this->usuario->get($idUsuario);
 				//$data['listaAutoresLibro'] = $this->libro->getAutores($idLibro);
 				//$data['listaTodosLosAutores'] = $this->persona->getAll();
-				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data);
+				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data, $data2);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/mostrarListaIncidencias", $data);

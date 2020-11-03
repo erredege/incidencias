@@ -1,7 +1,7 @@
 <?php
 
 $incidencia = $data['incidencia'];
-$usuario = $data['usuario'];
+$usuario = $data2['usuario'];
 //$listaAutoresLibro = $data['listaAutoresLibro'];
 //$listaTodosLosAutores = $data['listaTodosLosAutores'];
 
@@ -13,7 +13,7 @@ echo "<form action = 'index.php' method = 'get'>
         Lugar:<input type='text' name='lugar' value='$incidencia->lugar'><br>
         Equipo:<input type='text' name='equipo' value='$incidencia->equipo'><br>
         Observaciones:<input type='text' name='observaciones' value='$incidencia->observaciones'><br>";
-        if($usuario->tipo == "0"){
+        if($_SESSION["tipo"] == 'admin'){
             echo "Estado:"; if ($incidencia->estado ==  'abierta'){
                         echo "<select name='estado'>
                                 <option value='ABIERTA' selected >ABIERTA</option>
@@ -33,7 +33,7 @@ echo "<form action = 'index.php' method = 'get'>
                                 <option value='CERRADA' selected>CERRADA</option> 
                             </select><br>";
                     }
-        }else if($usuario->tipo == "1"){
+        }else if($_SESSION["tipo"] == 'user'){
             echo "Estado:"; if ($incidencia->estado ==  'abierta'){
                 echo "<select name='estado'>
                         <option value='ABIERTA' selected >ABIERTA</option>

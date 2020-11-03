@@ -21,7 +21,7 @@
 	}
 	
 	// Primero, el formulario de busqueda
-	if ($_SESSION['tipo'] == '0'){
+	if ($_SESSION['tipo'] ==  'admin'){
 		echo "<form action='index.php'>
 				<input type='hidden' name='action' value='buscarLibros'>
 				BUSCAR POR:
@@ -47,39 +47,23 @@
 				}
 			echo "</tr>";
 		
-		if ($_SESSION['tipo'] == '0'){
-			foreach($data['listaIncidencias'] as $incidencias) {
-					echo "<tr>";
-						echo "<td>".$incidencias->fecha."</td>";
-						echo "<td>".$incidencias->lugar."</td>";
-						echo "<td>".$incidencias->equipo."</td>";
-						echo "<td>".$_SESSION["idUsuario"]."</td>";
-						echo "<td>".$_SESSION["nombre"]."</td>";
-						echo "<td>".$incidencias->observaciones."</td>";
-						echo "<td>".$incidencias->estado."</td>";
-						echo "<td>".$incidencias->descripcion."</td>";
-						if (isset($_SESSION["idUsuario"])){
-							echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
-							echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
-						}
-					echo "</tr>";
-			}
-		}else if($incidencia->idUsuario == $usuario->idUsuario){
-			foreach($data['listaIncidencias'] as $incidencias) {
-				echo "<tr>";
-					echo "<td>".$incidencias->fecha."</td>";
-					echo "<td>".$incidencias->lugar."</td>";
-					echo "<td>".$incidencias->equipo."</td>";
-					echo "<td>".$_SESSION["idUsuario"]."</td>";
-					echo "<td>".$_SESSION["nombre"]."</td>";
-					echo "<td>".$incidencias->observaciones."</td>";
-					echo "<td>".$incidencias->estado."</td>";
-					echo "<td>".$incidencias->descripcion."</td>";
-					if (isset($_SESSION["idUsuario"])){
-						echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
+		foreach($data['listaIncidencias'] as $incidencias) {
+			echo "<tr>";
+				echo "<td>".$incidencias->fecha."</td>";
+				echo "<td>".$incidencias->lugar."</td>";
+				echo "<td>".$incidencias->equipo."</td>";
+				echo "<td>".$_SESSION["idUsuario"]."</td>";
+				echo "<td>".$_SESSION["nombre"]."</td>";
+				echo "<td>".$incidencias->observaciones."</td>";
+				echo "<td>".$incidencias->estado."</td>";
+				echo "<td>".$incidencias->descripcion."</td>";
+				if (isset($_SESSION["idUsuario"])){
+					echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
+					if($_SESSION["tipo"] == 'admin'){
+						echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
 					}
-				echo "</tr>";
-		}
+				}
+			echo "</tr>";
 		}
 		echo "</table>";
 	} 
