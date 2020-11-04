@@ -44,14 +44,18 @@
 
         public function insert($fecha, $lugar, $equipo, $observaciones, $estado, $descripcion) {
             $idUsuario = $_SESSION["idUsuario"];
-            $this->db->query("INSERT INTO incidencias (fecha, lugar, equipo, observaciones, estado, descripcion, idUsuario) 
-                        VALUES ('$fecha','$lugar', '$equipo', '$observaciones', '$estado', '$descripcion', '$idUsuario')");        
+            $nombre = $_SESSION["nombre"];
+            $tipo = $_SESSION["tipo"];
+            $this->db->query("INSERT INTO incidencias (fecha, lugar, equipo, observaciones, estado, descripcion, idUsuario, nombre, tipo) 
+                        VALUES ('$fecha','$lugar', '$equipo', '$observaciones', '$estado', '$descripcion', '$idUsuario', '$nombre', '$tipo')");        
             return $this->db->affected_rows;
         }
 
         public function update($idIncidencia, $fecha, $lugar, $equipo, $observaciones, $estado, $descripcion) {
             $idUsuario = $_SESSION["idUsuario"];
-            $this->db->query("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario' WHERE idIncidencia = '$idIncidencia'");
+            $nombre = $_SESSION["nombre"];
+            $tipo = $_SESSION["tipo"];
+            $this->db->query("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario', nombre = '$nombre', tipo = '$tipo' WHERE idIncidencia = '$idIncidencia'");
             return $this->db->affected_rows;
         }
 
@@ -94,6 +98,7 @@
                         OR incidencias.lugar LIKE '%$textoBusqueda%'
                         OR incidencias.equipo LIKE '%$textoBusqueda%'
                         OR incidencias.idUsuario LIKE '%$textoBusqueda%'
+                        OR incidencias.nombre LIKE '%$textoBusqueda%'
                         OR incidencias.estado LIKE '%$textoBusqueda%'
                         OR incidencias.descripcion LIKE '%$textoBusqueda%'
                         ORDER BY incidencias.fecha")) {

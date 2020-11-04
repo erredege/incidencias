@@ -48,8 +48,7 @@
         public function mostrarListaIncidencias() {
 			$idUsuario = $_SESSION["idUsuario"];
 			$data['listaIncidencias'] = $this->incidencia->getAll();
-			$data['tipoUser'] = $this->usuario->getTipo($idUsuario);
-			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
         }
 
 			// --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
@@ -58,7 +57,7 @@
 			if (isset($_SESSION["idUsuario"])) {
 				// Primero, accedemos al modelo de usuarios para obtener la lista de usuarios
 				$data['listaUsuarios'] = $this->usuario->getAll();
-				$this->vista->mostrar('incidencias/formularioInsertarIncidencia', $data);
+				$this->vista->mostrar('incidencia/formularioInsertarIncidencia', $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/formularioLogin", $data);
@@ -93,7 +92,7 @@
 					$data['msjError'] = "Ha ocurrido un error al insertar el usuario. Por favor, intentelo mas tarde.";
 				}
 				$data['listaIncidencias'] = $this->incidencia->getAll();
-				$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/formularioLogin", $data);
@@ -155,7 +154,7 @@
 					$data['msjInfo'] = "Incidencia borrada con exito";
 				}
 				$data['listaIncidencias'] = $this->incidencia->getAll();
-				$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/formularioLogin", $data);
@@ -171,10 +170,9 @@
 				$idUsuario = $_SESSION["idUsuario"];
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$data['incidencia'] = $this->incidencia->get($idIncidencia);
-				$data['usuario'] = $this->usuario->get($idUsuario);
 				//$data['listaAutoresLibro'] = $this->libro->getAutores($idLibro);
 				//$data['listaTodosLosAutores'] = $this->persona->getAll();
-				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data);
+				$this->vista->mostrar('incidencia/formularioModificarIncidencia', $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/mostrarListaIncidencias", $data);
@@ -207,7 +205,7 @@
 					$data['msjError'] = "Error al actualizar la incidencia";
 				}
 				$data['listaIncidencias'] = $this->incidencia->getAll();
-				$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/formularioLogin", $data);
@@ -223,7 +221,7 @@
 			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de libros
 			$data['listaIncidencias'] = $this->incidencia->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
-			$this->vista->mostrar("incidencias/mostrarListaIncidencias", $data);
+			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 		}
 
 

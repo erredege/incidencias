@@ -1,7 +1,6 @@
 <?php
 
 $incidencia = $data['incidencia'];
-$usuario = $data['usuario'];
 //$listaAutoresLibro = $data['listaAutoresLibro'];
 //$listaTodosLosAutores = $data['listaTodosLosAutores'];
 echo var_dump($data);
@@ -13,14 +12,14 @@ echo "<form action = 'index.php' method = 'get'>
         Lugar:<input type='text' name='lugar' value='$incidencia->lugar'><br>
         Equipo:<input type='text' name='equipo' value='$incidencia->equipo'><br>
         Observaciones:<input type='text' name='observaciones' value='$incidencia->observaciones'><br>";
-        if($usuario->tipo == 'admin'){
-            echo "Estado:"; if ($incidencia->estado ==  'abierta'){
+        if($incidencia->tipo == 'admin'){
+            echo "Estado:"; if ($incidencia->estado ==  'ABIERTA'){
                         echo "<select name='estado'>
                                 <option value='ABIERTA' selected >ABIERTA</option>
                                 <option value='EN CURSO'>EN CURSO</option>
                                 <option value='CERRADA'>CERRADA</option> 
                             </select><br>";
-                    }else if($incidencia->estado ==  'encurso'){
+                    }else if($incidencia->estado ==  'EN CURSO'){
                         echo "<select name='estado'>
                                 <option value='ABIERTA' >ABIERTA</option>
                                 <option value='EN CURSO' selected>EN CURSO</option>
@@ -33,18 +32,18 @@ echo "<form action = 'index.php' method = 'get'>
                                 <option value='CERRADA' selected>CERRADA</option> 
                             </select><br>";
                     }
-        }else if($usuario->tipo == 'user'){
-            echo "Estado:"; if ($incidencia->estado ==  'abierta'){
-                echo "<select name='estado'>
-                        <option value='ABIERTA' selected >ABIERTA</option>
-                        <option value='EN CURSO'>EN CURSO</option>
-                    </select><br>";
-            }else if($incidencia->estado ==  'encurso'){
-                echo "<select name='estado'>
-                        <option value='ABIERTA' >ABIERTA</option>
-                        <option value='EN CURSO' selected>EN CURSO</option>
-                </select><br>";
-            }
+        }else if($incidencia->tipo == 'user'){
+            echo "Estado:"; if ($incidencia->estado ==  'ABIERTA'){
+                        echo "<select name='estado'>
+                                <option value='ABIERTA' selected >ABIERTA</option>
+                                <option value='EN CURSO'>EN CURSO</option>
+                            </select><br>"; 
+                    }else{
+                        echo "<select name='estado'>
+                                <option value='ABIERTA' >ABIERTA</option>
+                                <option value='EN CURSO' selected>EN CURSO</option>
+                        </select><br>";
+                    }
         }
         echo "Descripcion:<input type='text' name='descripcion' value='$incidencia->descripcion'><br>"; 
 
