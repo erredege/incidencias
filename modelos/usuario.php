@@ -13,7 +13,7 @@
                     // Iniciamos la sesion
                     $_SESSION["idUsuario"] = $usuario->idUsuario;
                     $_SESSION["nombre"] = $usuario->nombre;
-                    $_SESSION["tipo"] = $useuario->tipo;
+                    $_SESSION["tipo"] = $usuario->tipo;
                     return true;
                 } else {
                     return false;

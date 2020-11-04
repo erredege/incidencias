@@ -1,19 +1,19 @@
 <?php
 
 $incidencia = $data['incidencia'];
-$usuario = $data2['usuario'];
+$usuario = $data['usuario'];
 //$listaAutoresLibro = $data['listaAutoresLibro'];
 //$listaTodosLosAutores = $data['listaTodosLosAutores'];
+echo var_dump($data);
 
 echo "<h1>Modificar Libro</h1>";
-
 echo "<form action = 'index.php' method = 'get'>
         <input type='hidden' name='idIncidencia' value='$incidencia->idIncidencia'>
         Fecha:<input type='text' name='fecha' value='$incidencia->fecha'><br>
         Lugar:<input type='text' name='lugar' value='$incidencia->lugar'><br>
         Equipo:<input type='text' name='equipo' value='$incidencia->equipo'><br>
         Observaciones:<input type='text' name='observaciones' value='$incidencia->observaciones'><br>";
-        if($_SESSION["tipo"] == 'admin'){
+        if($usuario->tipo == 'admin'){
             echo "Estado:"; if ($incidencia->estado ==  'abierta'){
                         echo "<select name='estado'>
                                 <option value='ABIERTA' selected >ABIERTA</option>
@@ -33,7 +33,7 @@ echo "<form action = 'index.php' method = 'get'>
                                 <option value='CERRADA' selected>CERRADA</option> 
                             </select><br>";
                     }
-        }else if($_SESSION["tipo"] == 'user'){
+        }else if($usuario->tipo == 'user'){
             echo "Estado:"; if ($incidencia->estado ==  'abierta'){
                 echo "<select name='estado'>
                         <option value='ABIERTA' selected >ABIERTA</option>

@@ -21,7 +21,7 @@
 	}
 	
 	// Primero, el formulario de busqueda
-	if ($_SESSION['tipo'] ==  'admin'){
+	if ($_SESSION['tipo'] ==  "admin"){
 		echo "<form action='index.php'>
 				<input type='hidden' name='action' value='buscarLibros'>
 				BUSCAR POR:

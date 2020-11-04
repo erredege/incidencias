@@ -171,10 +171,10 @@
 				$idUsuario = $_SESSION["idUsuario"];
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$data['incidencia'] = $this->incidencia->get($idIncidencia);
-				$data2['usuario'] = $this->usuario->get($idUsuario);
+				$data['usuario'] = $this->usuario->get($idUsuario);
 				//$data['listaAutoresLibro'] = $this->libro->getAutores($idLibro);
 				//$data['listaTodosLosAutores'] = $this->persona->getAll();
-				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data, $data2);
+				$this->vista->mostrar('incidencias/formularioModificarIncidencia', $data);
 			} else {
 				$data['msjError'] = "No tienes permisos para hacer eso";
 				$this->vista->mostrar("usuario/mostrarListaIncidencias", $data);

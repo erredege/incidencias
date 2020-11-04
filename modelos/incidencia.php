@@ -6,9 +6,9 @@
         }
 
         // Devuelve un libro a partir de su id, o null en caso de error
-        public function get($id) {
+        public function get($idIncidencia) {
             if ($result = $this->db->query("SELECT * FROM incidencias
-                                            WHERE incidencias.idIncidencia = '$id'")) {
+                                            WHERE incidencias.idIncidencia = '$idIncidencia'")) {
             $result = $result->fetch_object();
         } else {
             $result = null;
@@ -74,8 +74,8 @@
             else return 0; 
         }
 */
-        public function delete($id) {
-            $this->db->query("DELETE FROM incidencias WHERE idIncidencia = '$id'");
+        public function delete($idIncidencia) {
+            $this->db->query("DELETE FROM incidencias WHERE idIncidencia = '$idIncidencia'");
             return $this->db->affected_rows;
         }
 
