@@ -7,27 +7,14 @@
 
         // Devuelve un libro a partir de su id, o null en caso de error
         public function get($idIncidencia) {
-            if ($result = $this->db->query("SELECT * FROM incidencias
-                                            WHERE incidencias.idIncidencia = '$idIncidencia'")) {
+            
+        if ($result = $this->db->query("SELECT * FROM incidencias WHERE incidencias.idIncidencia = '$idIncidencia'")) {
             $result = $result->fetch_object();
         } else {
             $result = null;
         }
         return $result;
         }
-
-        /*public function getAutores($idLibro) {
-            $autoresLibro = $this->db->query("SELECT personas.idPersona FROM libros
-                            INNER JOIN escriben ON libros.idLibro = escriben.idLibro
-                            INNER JOIN personas ON escriben.idPersona = personas.idPersona
-                            WHERE libros.idLibro = '$idLibro'");             // Obtener solo los autores del libro que estamos buscando
-            // Vamos a convertir esa lista de autores del libro en un array de ids de personas
-            $listaAutoresLibro = array();
-            while ($autor = $autoresLibro->fetch_object()) {
-                $listaAutoresLibro[] = $autor->idPersona;
-            }
-            return $listaAutoresLibro;
-        }*/
 
         // Devuelve todos los libros en un array o null en caso de error
         public function getAll() {
@@ -55,29 +42,10 @@
             $idUsuario = $_SESSION["idUsuario"];
             $nombre = $_SESSION["nombre"];
             $tipo = $_SESSION["tipo"];
-            $this->db->query("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario', nombre = '$nombre', tipo = '$tipo' WHERE idIncidencia = '$idIncidencia'");
+            $this->db->query("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', equipo = '$equipo', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario', nombre = '$nombre', tipo = '$tipo' WHERE idIncidencia = '$idIncidencia'");
             return $this->db->affected_rows;
         }
 
-/*        public function updateAutores($idLibro, $autores) {
-            var_dump($autore);
-            $cantidadDeAutores = count($autores);
-    
-            // Primero borraremos todos los registros del libro actual y luego los insertaremos de nuevo
-            $this->db->query("DELETE FROM escriben WHERE idLibro = '$idLibro'");
-            
-            // Ya podemos insertar todos los autores junto con el libro en "escriben"
-            $insertados = 0;
-            foreach ($autores as $idAutor) {
-                $this->db->query("INSERT INTO escriben(idLibro, idPersona) VALUES('$idLibro', '$idAutor')");
-                if ($this->db->affected_rows == 1) $insertados++;
-            }
-    
-            // Si el número de autores insertados en "escriben" es igual al número de elementos del array $autores, todo ha ido bien
-            if ($cantidadDeAutores == $insertados) return 1;
-            else return 0; 
-        }
-*/
         public function delete($idIncidencia) {
             $this->db->query("DELETE FROM incidencias WHERE idIncidencia = '$idIncidencia'");
             return $this->db->affected_rows;

@@ -1,9 +1,6 @@
 <?php
 
 $incidencia = $data['incidencia'];
-//$listaAutoresLibro = $data['listaAutoresLibro'];
-//$listaTodosLosAutores = $data['listaTodosLosAutores'];
-echo var_dump($data);
 
 echo "<h1>Modificar Libro</h1>";
 echo "<form action = 'index.php' method = 'get'>

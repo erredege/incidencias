@@ -1,6 +1,11 @@
 <?php
 	
-	echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias</h1></a></p>";
+	if($_SESSION['tipo'] ==  "admin"){
+		echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias</h1></a>
+		<a href='index.php?action=mostrarUsuarios'><h1>Registro Usuarios</h1></a></p>";
+	}else{
+		echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias</h1></a></p>";
+	}
 	// Mostramos info del usuario logueado (si hay alguno)
 	if (isset($_SESSION['idUsuario'])) {
 		echo "<p>Sesion iniciada como, ".$_SESSION['nombre']."</p>";
@@ -12,28 +17,25 @@
 	if (isset($data['msjInfo'])) {
 		echo "<p style='color:blue'>".$data['msjInfo']."</p>";
 	}
-
-	// Enlace a "Iniciar sesion" o "Cerrar sesion"
-	if (isset($_SESSION["idUsuario"])) {
-		echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesion</a></p>";
-	}
-	else {
-		echo "<p><a href='index.php?action=mostrarFormularioLogin'>Iniciar sesion</a></p>";
-	}
-	//echo var_dump($data);
+	
 	// Primero, el formulario de busqueda
 	if ($_SESSION['tipo'] ==  "admin"){
 		echo "<form action='index.php'>
-				<input type='hidden' name='action' value='buscarLibros'>
+				<input type='hidden' name='action' value='buscarIncidencias'>
 				BUSCAR POR:
 				<input type='text' name='textoBusqueda' placeholder='descripción, id o nombre del usuario, estado, fecha, lugar o equipo' size='55'>
 				<input type='submit' value='Buscar'>
 			</form><br>";
 	}
 
+	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
+	if (isset($_SESSION["idUsuario"])) {
+		echo "<p><a href='index.php?action=formularioInsertarIncidencia'>Nuevo</a></p>";
+	}
+
 	if (count($data['listaIncidencias']) > 0) {
 
-		// Ahora, la tabla con los datos de los libros
+		// Ahora, la tabla con los datos de las incidencias
 		echo "<table border ='1'>";
 			echo "<tr>";
 				echo "<td>Fecha</td>";
@@ -94,7 +96,11 @@
 		// La consulta no contiene registros
 		echo "No se encontraron datos";
 	}
-	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
+	
+	// Enlace a "Iniciar sesion" o "Cerrar sesion"
 	if (isset($_SESSION["idUsuario"])) {
-		echo "<p><a href='index.php?action=formularioInsertarIncidencia'>Nuevo</a></p>";
+		echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesion</a></p>";
+	}
+	else {
+		echo "<p><a href='index.php?action=mostrarFormularioLogin'>Iniciar sesion</a></p>";
 	}
