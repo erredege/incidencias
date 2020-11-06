@@ -302,7 +302,7 @@
 			$this->vista->mostrar("usuario/mostrarUsuarios", $data);
 		}
 
-		// ---------------------------------- CAMBIAR VALOR DE ORDENACION --------------------------------
+		// ---------------------------------- CAMBIAR VALOR DE ORDENACION INCIDENCIAS--------------------------------
 
 		public function tipoBusqueda(){
 			// Recuperamos el texto de búsqueda de la variable de formulario
@@ -311,5 +311,16 @@
 			$data['listaIncidencias'] = $this->incidencia->getOrder($tipoBusqueda);
 			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
 			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+		}
+
+		// ---------------------------------- CAMBIAR VALOR DE ORDENACION USUARIOS--------------------------------
+
+		public function tipoBusquedaUsuarios(){
+			// Recuperamos el texto de búsqueda de la variable de formulario
+			$tipoBusqueda = $_REQUEST["tipoBusqueda"];
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
+			$data['listaUsuarios'] = $this->usuario->getOrder($tipoBusqueda);
+			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
+			$this->vista->mostrar("usuario/mostrarusuarios", $data);
 		}
     }

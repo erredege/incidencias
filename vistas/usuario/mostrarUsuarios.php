@@ -28,6 +28,18 @@
 			</form><br>";
 	}
 
+	if (isset($_SESSION["idUsuario"])) {
+		echo "<form action = 'index.php' method = 'get'>
+			Ordenar por: 
+			<select name='tipoBusqueda'>
+				<option value='nombre'>nombre</option>
+				<option value='apellidos'>apellidos</option>
+				<option value='tipo'>tipo</option>
+			</select>
+			<input type='hidden' name='action' value='tipoBusquedaUsuarios'>
+			<input type='submit' value='Ordenar'>";
+	}
+
 	if (count($data['listaUsuarios']) > 0) {
 
 		// Ahora, la tabla con los datos de los libros

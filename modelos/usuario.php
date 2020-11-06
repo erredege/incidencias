@@ -47,6 +47,18 @@
             return $arrayResult;
         }
 
+        public function getOrder($tipoBusqueda) {
+            $arrayResult = array();
+            if ($result = $this->db->query("SELECT * FROM usuarios ORDER BY usuarios.$tipoBusqueda")) {
+                while ($fila = $result->fetch_object()) {
+                    $arrayResult[] = $fila;
+                }
+            } else {
+                $arrayResult = null;
+            }
+            return $arrayResult;
+        }
+
         public function insert($nombre, $apellidos, $password, $tipo) {
             $this->db->query("INSERT INTO usuarios (nombre,apellidos,password,tipo) 
                         VALUES ('$nombre', '$apellidos', '$password', '$tipo')");        
