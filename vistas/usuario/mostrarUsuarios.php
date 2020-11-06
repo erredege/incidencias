@@ -1,9 +1,10 @@
 <?php
-	
-	echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias</h1></a></p>";
 
 	if($_SESSION['tipo'] ==  "admin"){
-		echo "<p><a href='index.php?action=mostrarUsuarios'><h1>Registro Usuarios</h1></a></p>";
+		echo "<p><h1>Registro de <a href='index.php?action=mostrarListaIncidencias'>Incidencias</a> y 
+		<a href='index.php?action=mostrarUsuarios'>Usuarios</a> IES Celia Viñas</h1></p>";
+	}else{
+		echo "<p><a href='index.php?action=mostrarListaIncidencias'><h1>Registro de Incidencias IES Celia Viñas</h1></a></p>";
 	}
 	// Mostramos info del usuario logueado (si hay alguno)
 	if (isset($_SESSION['idUsuario'])) {
