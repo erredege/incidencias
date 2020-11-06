@@ -1,11 +1,3 @@
-<!-- BIBLIOTECA VERSIoN 3
-     Caracteristicas de esta version:
-       - Codigo con arquitectura MVC
-       - Con seguridad
-       - Con sesiones y control de acceso
-       - Sin reutilizacion de codigo
--->
-
 <?php
 
 	//iniciamos sesion
