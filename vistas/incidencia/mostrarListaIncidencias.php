@@ -28,9 +28,21 @@
 			</form><br>";
 	}
 
-	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
 	if (isset($_SESSION["idUsuario"])) {
-		echo "<p><a href='index.php?action=formularioInsertarIncidencia'>Nuevo</a></p>";
+		echo "<form action = 'index.php' method = 'get'>
+			Ordenar por: 
+			<select name='tipoBusqueda'>
+				<option value='fecha'>fecha</option>
+				<option value='lugar'>lugar</option>
+				<option value='equipo'>equipo</option>
+				<option value='idUsuario'>idUsuario</option>
+				<option value='nombre'>nombre</option>
+				<option value='observaciones'>observaciones</option>
+				<option value='estado'>estado</option>
+				<option value='descripcion'>descripcion</option>
+			</select>
+			<input type='hidden' name='action' value='tipoBusqueda'>
+			<input type='submit' value='Ordenar'>";
 	}
 
 	if (count($data['listaIncidencias']) > 0) {
@@ -97,6 +109,11 @@
 		echo "No se encontraron datos";
 	}
 	
+	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
+	if (isset($_SESSION["idUsuario"])) {
+		echo "<p><a href='index.php?action=formularioInsertarIncidencia'>Nuevo</a></p>";
+	}
+
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"
 	if (isset($_SESSION["idUsuario"])) {
 		echo "<p><a href='index.php?action=cerrarSesion'>Cerrar sesion</a></p>";

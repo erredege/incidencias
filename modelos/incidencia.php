@@ -3,6 +3,7 @@
         private $db;
         public function __construct() {
             $this->db = new mysqli("localhost", "root", "", "incidencias");
+            //$this->db = new mysqli("localhost", "rosen", "Rosen123*", "incidencias_rosendo");
         }
 
         // Devuelve un libro a partir de su id, o null en caso de error
@@ -20,6 +21,18 @@
         public function getAll() {
             $arrayResult = array();
             if ($result = $this->db->query("SELECT * FROM incidencias ORDER BY incidencias.idIncidencia")) {
+                while ($fila = $result->fetch_object()) {
+                    $arrayResult[] = $fila;
+                }
+            } else {
+                $arrayResult = null;
+            }
+            return $arrayResult;
+        }
+
+        public function getOrder($tipoBusqueda) {
+            $arrayResult = array();
+            if ($result = $this->db->query("SELECT * FROM incidencias ORDER BY incidencias.$tipoBusqueda")) {
                 while ($fila = $result->fetch_object()) {
                     $arrayResult[] = $fila;
                 }

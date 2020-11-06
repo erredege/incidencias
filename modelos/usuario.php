@@ -3,6 +3,7 @@
         private $db;
         public function __construct() {
             $this->db = new mysqli("localhost", "root", "", "incidencias");
+            //$this->db = new mysqli("localhost", "rosen", "Rosen123*", "incidencias_rosendo");
         }
 
         public function buscarUsuario($nombre,$password) {
@@ -22,16 +23,6 @@
                 return false;
             }
 
-        }
-
-        public function getTipo($idUsuario){
-            $arrayResult = array();
-            if ($result = $this->db->query("SELECT tipo FROM usuarios WHERE usuarios.idUsuario = '$idUsuario'")) {
-                $arrayResult[] = $result->fetch_object();
-            } else {
-                $arrayResult = null;
-            }
-            return $arrayResult;
         }
 
         public function get($idUsuario) {

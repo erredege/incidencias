@@ -28,11 +28,6 @@
 			</form><br>";
 	}
 
-	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
-	if (isset($_SESSION["idUsuario"])) {
-		echo "<p><a href='index.php?action=formularioInsertarUsuario'>Nuevo</a></p>";
-	}
-
 	if (count($data['listaUsuarios']) > 0) {
 
 		// Ahora, la tabla con los datos de los libros
@@ -63,6 +58,11 @@
 	else {
 		// La consulta no contiene registros
 		echo "No se encontraron datos";
+	}
+
+	// El bot�n "Nuevo libro" solo se muestra si hay una sesi�n iniciada
+	if (isset($_SESSION["idUsuario"])) {
+		echo "<p><a href='index.php?action=formularioInsertarUsuario'>Nuevo</a></p>";
 	}
 
 	// Enlace a "Iniciar sesion" o "Cerrar sesion"

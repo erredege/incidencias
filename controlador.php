@@ -168,9 +168,8 @@
 
         public function buscarIncidencias() {
 			// Recuperamos el texto de b�squeda de la variable de formulario
-			// Recuperamos el texto de búsqueda de la variable de formulario
 			$textoBusqueda = $_REQUEST["textoBusqueda"];
-			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de libros
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencas
 			$data['listaIncidencias'] = $this->incidencia->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
 			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
@@ -295,12 +294,22 @@
 		// --------------------------------- BUSCAR USUARIOS ----------------------------------------
 
         public function buscarUsuarios() {
-			// Recuperamos el texto de b�squeda de la variable de formulario
 			// Recuperamos el texto de búsqueda de la variable de formulario
 			$textoBusqueda = $_REQUEST["textoBusqueda"];
-			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de libros
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de usuarios
 			$data['listaUsuarios'] = $this->usuario->busquedaAproximada($textoBusqueda);
 			$data['msjInfo'] = "Resultados de la búsqueda: \"$textoBusqueda\"";
 			$this->vista->mostrar("usuario/mostrarUsuarios", $data);
+		}
+
+		// ---------------------------------- CAMBIAR VALOR DE ORDENACION --------------------------------
+
+		public function tipoBusqueda(){
+			// Recuperamos el texto de búsqueda de la variable de formulario
+			$tipoBusqueda = $_REQUEST["tipoBusqueda"];
+			// Lanzamos la búsqueda y enviamos los resultados a la vista de lista de incidencias
+			$data['listaIncidencias'] = $this->incidencia->getOrder($tipoBusqueda);
+			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
+			$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 		}
     }
