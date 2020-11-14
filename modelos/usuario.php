@@ -10,11 +10,11 @@
 
         public function buscarUsuario($nombre,$password) {
 
-            $result = $this->db->consulta("SELECT idUsuario, nombre, tipo  FROM usuarios WHERE nombre = '$nombre' AND password = '$password'")
+            $usuario = $this->db->consulta("SELECT idUsuario, nombre, tipo  FROM usuarios WHERE nombre = '$nombre' AND password = '$password'");
             
-            if ($usuario) {
+            if ($usuario){
                 return $usuario;
-            } else {
+            }else {
                 return null;
             }
 
@@ -22,7 +22,7 @@
 
         public function get($idUsuario) {
             
-            $result = $this->db->consulta("SELECT * FROM usuarios WHERE usuarios.idUsuario = '$idUsuario'")
+            $result = $this->db->consulta("SELECT * FROM usuarios WHERE usuarios.idUsuario = '$idUsuario'");
            
             return $result;
 
@@ -30,7 +30,7 @@
 
         public function getAll() {
             $arrayResult = array();
-            $result = $this->db->consulta("SELECT * FROM usuarios")
+            $result = $this->db->consulta("SELECT * FROM usuarios");
             
             return $result;
 
@@ -38,7 +38,7 @@
 
         public function getOrder($tipoBusqueda) {
             $arrayResult = array();
-            $result = $this->db->consulta("SELECT * FROM usuarios ORDER BY usuarios.$tipoBusqueda")
+            $result = $this->db->consulta("SELECT * FROM usuarios ORDER BY usuarios.$tipoBusqueda");
             
             return $result;
         }

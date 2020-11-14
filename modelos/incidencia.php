@@ -1,6 +1,6 @@
 <?php  
      include_once("DB.php");
-     
+
     class Incidencia {
         private $db;
 
@@ -12,7 +12,7 @@
         // Devuelve un libro a partir de su id, o null en caso de error
         public function get($idIncidencia) {
             
-            $result = $this->db->consulta("SELECT * FROM incidencias WHERE incidencias.idIncidencia = '$idIncidencia'")
+            $result = $this->db->consulta("SELECT * FROM incidencias WHERE incidencias.idIncidencia = '$idIncidencia'");
                 
             return $result;
         }
@@ -20,14 +20,14 @@
         // Devuelve todos los libros en un array o null en caso de error
         public function getAll() {
             $arrayResult = array();
-            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.idIncidencia")
+            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.idIncidencia");
                
             return $result;
         }
 
         public function getOrder($tipoBusqueda) {
             $arrayResult = array();
-            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.$tipoBusqueda")
+            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.$tipoBusqueda");
 
             return $arrayResult;
         }
