@@ -1,3 +1,27 @@
+<script>
+
+	function ejecutar_ajax() {
+		peticion_http = new XMLHttpRequest();
+		peticion_http.onreadystatechange = procesa_respuesta;
+		nombre = document.getElementById("nombre").value;
+		peticion_http.open('GET', 'http://localhost/ejerciciosPHPiescelia/ejerciciosPHPiescelia/biblioteca-v4/index.php?action=comprobarNombreUsuario&nombreUsuario=' + nombre, true);
+		peticion_http.send(null);
+	}	
+
+	function procesa_respuesta() {
+		if(peticion_http.readyState == 4) {
+			if(peticion_http.status == 200) {
+				if (peticion_http.responseText == "0")
+					document.getElementById('mensajeUsuario').innerHTML = "Error, ese usuario no existe";
+				if (peticion_http.responseText == "1")
+					document.getElementById('mensajeUsuario').innerHTML = "Usuario OK";
+			}
+		}
+	}	
+</script>
+
+
+
 <h1>Iniciar sesion</h1>
 
 <?php
@@ -10,7 +34,8 @@
 ?>
 
 <form action='index.php'>
-	Usuario:<input type='text' name='nombre'><br>
+	Usuario:<input type='text' name='nombre' id='nombreUsuario' onBlur='ejecutar_ajax()'>
+	<span id='mensajeUsuario'></span><br>
 	Clave:<input type='password' name='password'><br>
 	<input type='hidden' name='action' value='procesarLogin'>
 	<input type='submit'>

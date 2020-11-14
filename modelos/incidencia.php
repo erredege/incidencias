@@ -1,44 +1,34 @@
 <?php  
+     include_once("DB.php");
+     
     class Incidencia {
         private $db;
+
         public function __construct() {
-            $this->db = new mysqli("localhost", "root", "", "incidencias");
+            $this->db = new DB;
             //$this->db = new mysqli("localhost", "rosen", "Rosen123*", "incidencias_rosendo");
         }
 
         // Devuelve un libro a partir de su id, o null en caso de error
         public function get($idIncidencia) {
             
-        if ($result = $this->db->query("SELECT * FROM incidencias WHERE incidencias.idIncidencia = '$idIncidencia'")) {
-            $result = $result->fetch_object();
-        } else {
-            $result = null;
-        }
-        return $result;
+            $result = $this->db->consulta("SELECT * FROM incidencias WHERE incidencias.idIncidencia = '$idIncidencia'")
+                
+            return $result;
         }
 
         // Devuelve todos los libros en un array o null en caso de error
         public function getAll() {
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT * FROM incidencias ORDER BY incidencias.idIncidencia")) {
-                while ($fila = $result->fetch_object()) {
-                    $arrayResult[] = $fila;
-                }
-            } else {
-                $arrayResult = null;
-            }
-            return $arrayResult;
+            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.idIncidencia")
+               
+            return $result;
         }
 
         public function getOrder($tipoBusqueda) {
             $arrayResult = array();
-            if ($result = $this->db->query("SELECT * FROM incidencias ORDER BY incidencias.$tipoBusqueda")) {
-                while ($fila = $result->fetch_object()) {
-                    $arrayResult[] = $fila;
-                }
-            } else {
-                $arrayResult = null;
-            }
+            $result = $this->db->consulta("SELECT * FROM incidencias ORDER BY incidencias.$tipoBusqueda")
+
             return $arrayResult;
         }
 
@@ -46,27 +36,36 @@
             $idUsuario = $_SESSION["idUsuario"];
             $nombre = $_SESSION["nombre"];
             $tipo = $_SESSION["tipo"];
-            $this->db->query("INSERT INTO incidencias (fecha, lugar, equipo, observaciones, estado, descripcion, idUsuario, nombre, tipo) 
+            $fecha = $_REQUEST["fecha"];
+            $lugar = $_REQUEST["lugar"];
+            $equipo = $_REQUEST["equipo"];
+            $observaciones = $_REQUEST["observaciones"];
+            $estado = $_REQUEST["estado"];
+            $descripcion = $_REQUEST["descripcion"];
+
+            $result = $this->db->manipulacion("INSERT INTO incidencias (fecha, lugar, equipo, observaciones, estado, descripcion, idUsuario, nombre, tipo) 
                         VALUES ('$fecha','$lugar', '$equipo', '$observaciones', '$estado', '$descripcion', '$idUsuario', '$nombre', '$tipo')");        
-            return $this->db->affected_rows;
+            return $result;
         }
 
         public function update($idIncidencia, $fecha, $lugar, $equipo, $observaciones, $estado, $descripcion) {
             $idUsuario = $_SESSION["idUsuario"];
             $nombre = $_SESSION["nombre"];
             $tipo = $_SESSION["tipo"];
-            $this->db->query("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', equipo = '$equipo', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario', nombre = '$nombre', tipo = '$tipo' WHERE idIncidencia = '$idIncidencia'");
-            return $this->db->affected_rows;
+
+            $result = $this->db->manipulacion("UPDATE incidencias SET fecha = '$fecha', lugar = '$lugar', equipo = '$equipo', observaciones = '$observaciones', estado = '$estado', descripcion = '$descripcion', idUsuario = '$idUsuario', nombre = '$nombre', tipo = '$tipo' WHERE idIncidencia = '$idIncidencia'");
+            
+            return $result;
         }
 
         public function delete($idIncidencia) {
-            $this->db->query("DELETE FROM incidencias WHERE idIncidencia = '$idIncidencia'");
-            return $this->db->affected_rows;
+            $result = $this->db->manipulacion("DELETE FROM incidencias WHERE idIncidencia = '$idIncidencia'");
+            return $result;
         }
 
         public function getLastId() {
-            $result = $this->db->query("SELECT MAX(idIncidencia) AS ultimoIdIncidencia FROM incidencias");
-            $idIncidencia = $result->fetch_object()->ultimoIdIncidencia;
+            $result = $this->db->consulta("SELECT MAX(idIncidencia) AS ultimoIdIncidencia FROM incidencias");
+            $idIncidencia = $result->ultimoIdIncidencia;
             return $idIncidencia;
         }
 
@@ -74,7 +73,7 @@
             $arrayResult = array();
             // Buscamos los libros de la biblioteca que coincidan con el texto de búsqueda
 
-            if ($result = $this->db->query("SELECT * FROM incidencias
+            if ($result = $this->db->consulta("SELECT * FROM incidencias
                         WHERE incidencias.fecha LIKE '%$textoBusqueda%'
                         OR incidencias.lugar LIKE '%$textoBusqueda%'
                         OR incidencias.equipo LIKE '%$textoBusqueda%'

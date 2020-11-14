@@ -2,6 +2,7 @@
 	include_once("vista.php");
 	include_once("modelos/usuario.php");
 	include_once("modelos/incidencia.php");
+	include_once("modelos/seguridad.php");
 
 	// Creamos los objetos vista y modelos
  
@@ -13,7 +14,8 @@
         public function __construct() {
             $this->vista = new Vista();
             $this->usuario = new Usuario();
-            $this->incidencia = new Incidencia();
+			$this->incidencia = new Incidencia();
+			$this->seguridad = new Seguridad();
         }
 
         public function mostrarFormularioLogin() {
@@ -24,11 +26,11 @@
 			$nombre = $_REQUEST["nombre"];
 			$password = $_REQUEST["password"];
 
-			$result = $this->usuario->buscarUsuario($nombre, $password);
+			$usuario = $this->usuario->buscarUsuario($nombre, $password);
 			
-			if ($result) {
-				// De momento, dejamos aqu� este echo. Ya lo quitaremos
-				echo "<script>location.href='index.php?action=mostrarListaIncidencias'</script>";
+			if (count($usuario) == 1) {
+				$this->seguridad->abrirSesion($usuario[0]);
+				$this->mostrarListaIncidencias();
 			} 
 			else {
 				// Error al iniciar la sesion
@@ -38,8 +40,9 @@
         }
 
 		public function cerrarSesion() {
-			session_destroy();
-			$data['msjInfo'] = "Sesion cerrada correctamente";
+
+			$this->seguridad->cerrarSesion();
+			$data['msjInfo'] = "Sesión cerrada correctamente";
 			$this->vista->mostrar("usuario/formularioLogin", $data);
         }
 			
@@ -54,11 +57,10 @@
 			// --------------------------------- FORMULARIO INSERTAR INCIDENCIAS ----------------------------------------
 
         public function formularioInsertarIncidencia() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 				$this->vista->mostrar('incidencia/formularioInsertarIncidencia');
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
         }
 		
@@ -66,16 +68,11 @@
 			// --------------------------------- INSERTAR INCIDENCIAS ----------------------------------------
 
         public function insertarIncidencia() {
-			
-			if (isset($_SESSION["idUsuario"])) {
+				
+			if ($this->seguridad->haySesionIniciada()) {
 				// Vamos a procesar el formulario de alta de libros
 				// Primero, recuperamos todos los datos del formulario
-				$fecha = $_REQUEST["fecha"];
-				$lugar = $_REQUEST["lugar"];
-				$equipo = $_REQUEST["equipo"];
-                $observaciones = $_REQUEST["observaciones"];
-                $estado = $_REQUEST["estado"];
-				$descripcion = $_REQUEST["descripcion"];
+				// Ahora insertamos el libro en la BD
 				$result = $this->incidencia->insert($fecha, $lugar, $equipo, $observaciones,  $estado, $descripcion);
 
 				// Lanzamos el INSERT contra la BD.
@@ -89,17 +86,17 @@
 				}
 				$data['listaIncidencias'] = $this->incidencia->getAll();
 				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
-			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
-			}
-				
+
+			}else {
+				$this->seguridad->errorAccesoNoPermitido();
+			}	
 		}
 
 			// --------------------------------- BORRAR INCIDENCIAS ----------------------------------------
 
         public function borrarIncidencia() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
+
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$result = $this->incidencia->delete($idIncidencia);
 				if ($result == 0) {
@@ -110,8 +107,7 @@
 				$data['listaIncidencias'] = $this->incidencia->getAll();
 				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 
 		}
@@ -119,15 +115,14 @@
 		// --------------------------------- FORMULARIO MODIFICAR INCIDENCIAS ----------------------------------------
 
 		public function formularioModificarIncidencia() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 
 				$idUsuario = $_SESSION["idUsuario"];
 				$idIncidencia = $_REQUEST["idIncidencia"];
 				$data['incidencia'] = $this->incidencia->get($idIncidencia);
 				$this->vista->mostrar('incidencia/formularioModificarIncidencia', $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 		}
 
@@ -135,7 +130,7 @@
 
 		public function modificarIncidencia() {
 
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 
 				// Vamos a procesar el formulario de modificaci�n de libros
 				// Primero, recuperamos todos los datos del formulario
@@ -159,8 +154,7 @@
 				$data['listaIncidencias'] = $this->incidencia->getAll();
 				$this->vista->mostrar("incidencia/mostrarListaIncidencias", $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 		}
 
@@ -186,11 +180,10 @@
 		// --------------------------------- INSERTAR USUARIO ----------------------------------------
 
 		 public function formularioInsertarUsuario() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 				$this->vista->mostrar('usuario/formularioInsertarUsuario');
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
         }
 		
@@ -199,13 +192,10 @@
 
         public function insertarUsuario() {
 			
-			if (isset($_SESSION["idUsuario"])) {
-				// Vamos a procesar el formulario de alta de libros
+			if ($this->seguridad->haySesionIniciada()) {
+				// Vamos a procesar el formulario de alta de usuario
 				// Primero, recuperamos todos los datos del formulario
-				$nombre = $_REQUEST["nombre"];
-				$apellidos = $_REQUEST["apellidos"];
-				$password = $_REQUEST["password"];
-				$tipo = $_REQUEST["tipo"];
+				// Ahora insertamos el usuario en la BD
 				$result = $this->usuario->insert($nombre, $apellidos, $password, $tipo);
 
 				// Lanzamos el INSERT contra la BD.
@@ -220,8 +210,7 @@
 				$data['listaUsuarios'] = $this->usuario->getAll();
 				$this->vista->mostrar("usuario/mostrarUsuarios", $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 				
 		}
@@ -229,7 +218,7 @@
 		//---------------------------------- BORRAR USUARIO ---------------------------------
 
 		public function borrarUsuario() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 				$idUsuario = $_REQUEST["idUsuario"];
 				$result = $this->usuario->delete($idUsuario);
 				if ($result == 0) {
@@ -240,8 +229,7 @@
 				$data['listaUsuarios'] = $this->usuario->getAll();
 				$this->vista->mostrar("usuario/mostrarUsuarios", $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 
 		}
@@ -249,14 +237,13 @@
 		// --------------------------------- FORMULARIO MODIFICAR USUARIOS ----------------------------------------
 
 		public function formularioModificarUsuario() {
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 
 				$idUsuario = $_REQUEST["idUsuario"];
 				$data['usuario'] = $this->usuario->get($idUsuario);
 				$this->vista->mostrar('usuario/formularioModificarUsuario', $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/mostrarUsuarios", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 		}
 
@@ -264,7 +251,7 @@
 
 		public function modificarUsuario() {
 
-			if (isset($_SESSION["idUsuario"])) {
+			if ($this->seguridad->haySesionIniciada()) {
 
 				// Vamos a procesar el formulario de modificaci�n de libros
 				// Primero, recuperamos todos los datos del formulario
@@ -286,8 +273,7 @@
 				$data['listaUsuarios'] = $this->usuario->getAll();
 				$this->vista->mostrar("usuario/mostrarUsuarios", $data);
 			} else {
-				$data['msjError'] = "No tienes permisos para hacer eso";
-				$this->vista->mostrar("usuario/formularioLogin", $data);
+				$this->seguridad->errorAccesoNoPermitido();
 			}
 		}
 
@@ -322,5 +308,13 @@
 			$data['listaUsuarios'] = $this->usuario->getOrder($tipoBusqueda);
 			$data['msjInfo'] = "Busquedas ordenadas por: \"$tipoBusqueda\"";
 			$this->vista->mostrar("usuario/mostrarusuarios", $data);
+		}
+
+		// ----------------------------------- COMPROBAR NOMBRE DE USUARIO -------------------------------------------
+
+		public function comprobarNombreUsuario() {
+			$nombre = $_REQUEST["nombre"];
+			$result = $this->usuario->existeNombre($nombre);
+			echo $result;
 		}
     }
