@@ -1,7 +1,7 @@
 <?php
 
 $incidencia = $data['incidencia'];
-
+var_dump($incidencia);
 echo "<h1>Modificar Libro</h1>";
 echo "<form action = 'index.php' method = 'get'>
         <input type='hidden' name='idIncidencia' value='$incidencia->idIncidencia'>

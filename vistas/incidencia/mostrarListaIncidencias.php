@@ -1,3 +1,30 @@
+<script>
+	peticionAjax = new XMLHttpRequest();
+
+	function borrarPorAjax(idIncidencia) {
+		idIncidenciaGlobal = idIncidencia;
+		peticionAjax.onreadystatechange = borradoIncidenciaCompletado;
+		peticionAjax.open("GET", "index.php?action=borrarIncidenciaAjax&idIncidencia=" + idIncidencia, true);
+		peticionAjax.send(null);
+	}
+
+	function borradoIncidenciaCompletado() {
+		if(peticionAjax.readyState == 4) {
+			if (peticionAjax.status == 200) {
+				idIncidencia = peticionAjax.responseText;
+				if (idIncidencia == -1) {
+					document.getElementById('msjError').innerHTML = "Ha ocurrido un error al borrar la Incidencia";
+				}
+				else {
+					document.getElementById('msjInfo').innerHTML = "Incidencia borrada con éxito";
+					document.getElementById('incidencia' + idIncidencia).destroy();
+				}
+			}
+		} 
+	}
+</script>
+
+
 <?php
 	
 	if($_SESSION['tipo'] ==  "admin"){
@@ -12,10 +39,15 @@
 	}
 	// Mostramos mensaje de error o de informaci�n (si hay alguno)
 	if (isset($data['msjError'])) {
-		echo "<p style='color:red'>".$data['msjError']."</p>";
+		echo "<p style='color:red' id='msjError'>".$data['msjError']."</p>";
+	} else {
+		echo "<p style='color:red' id='msjError'></p>";
 	}
+
 	if (isset($data['msjInfo'])) {
-		echo "<p style='color:blue'>".$data['msjInfo']."</p>";
+		echo "<p style='color:blue' id='msjInfo'>".$data['msjInfo']."</p>";
+	} else {
+		echo "<p style='color:blue' id='msjInfo'></p>";
 	}
 	
 	// Primero, el formulario de busqueda
@@ -76,6 +108,7 @@
 						echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
 						if($_SESSION["tipo"] == 'admin'){
 							echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
+							echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax</a></td>";
 						}
 					}
 				echo "</tr>";
@@ -96,6 +129,7 @@
 							echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
 							if($_SESSION["tipo"] == 'admin'){
 								echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
+								echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax</a></td>";
 							}
 						}
 					echo "</tr>";

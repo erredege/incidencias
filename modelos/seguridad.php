@@ -4,6 +4,7 @@
         public function abrirSesion($usuario) {
             $_SESSION["idUsuario"] = $usuario->idUsuario;
             $_SESSION["nombre"] = $usuario->nombre;
+            $_SESSION["tipo"] = $usuario->tipo;
         }
 
         public function cerrarSesion() {
