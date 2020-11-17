@@ -18,7 +18,7 @@
 				}
 				else {
 					document.getElementById('msjInfo').innerHTML = "Incidencia borrada con éxito";
-					document.getElementById('incidencia' + idIncidencia).removeChild();
+					document.getElementById('incidencia' + idIncidencia).remove();
 				}
 			}
 		} 
