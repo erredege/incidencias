@@ -92,7 +92,7 @@
 			}	
 		}
 
-			// --------------------------------- BORRAR INCIDENCIAS ----------------------------------------
+		// --------------------------------- BORRAR INCIDENCIAS ----------------------------------------
 
         public function borrarIncidencia() {
 			if ($this->seguridad->haySesionIniciada()) {
@@ -111,6 +111,28 @@
 			}
 
 		}
+
+		// --------------------Elimina una incidencia de la base de datos (petición por ajax)----------------------------
+
+	public function borrarIncidenciaAjax(){
+
+		if ($this->seguridad->haySesionIniciada()) {
+			// Recuperamos el id de la incidencia
+			$idIncidencia = $_REQUEST["idIncidencia"];
+			// Eliminamos la incidencia de la BD
+			$result = $this->incidencia->delete($idIncidencia);
+			if ($result == 0) {
+				// Error al borrar. Enviamos el código -1 al JS
+				echo "-1";
+			}
+			else {
+				// Borrado con éxito. Enviamos el id del libro a JS
+				echo $idIncidencia;
+			}
+		} else {
+			echo "-1";
+		}
+	}
 
 		// --------------------------------- FORMULARIO MODIFICAR INCIDENCIAS ----------------------------------------
 

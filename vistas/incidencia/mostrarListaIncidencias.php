@@ -1,4 +1,5 @@
 <script>
+	// **** Petición y respuesta AJAX con JS tradicional ****
 	peticionAjax = new XMLHttpRequest();
 
 	function borrarPorAjax(idIncidencia) {
@@ -17,11 +18,27 @@
 				}
 				else {
 					document.getElementById('msjInfo').innerHTML = "Incidencia borrada con éxito";
-					document.getElementById('incidencia' + idIncidencia).destroy();
+					document.getElementById('incidencia' + idIncidencia).removeChild();
 				}
 			}
 		} 
 	}
+
+	// **** Petición y respuesta AJAX con jQuery ****
+
+	$(document).ready(function() {
+		$(".btnBorrar").click(function() {
+			$.get("index.php?action=borrarIncidenciaAjax&idIncidencia=" + this.idIncidencia, null, function(idIncidenciaBorrado) {
+				if (idIncidenciaBorrado == -1) {
+					$('#msjError').html("Ha ocurrido un error al borrar la incidencia");
+				}
+				else {
+					$('#msjInfo').html("Incidencia borrada con éxito");
+					$('#incidencia' + idIncidencia).remove();
+				}
+			});
+		});
+	});
 </script>
 
 
@@ -95,7 +112,7 @@
 			echo "</tr>";
 		if($_SESSION["tipo"] == "admin"){
 			foreach($data['listaIncidencias'] as $incidencias) {
-				echo "<tr>";
+				echo "<tr id='incidencia".$incidencias->idIncidencia."'>";
 					echo "<td>".$incidencias->fecha."</td>";
 					echo "<td>".$incidencias->lugar."</td>";
 					echo "<td>".$incidencias->equipo."</td>";
@@ -108,7 +125,8 @@
 						echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
 						if($_SESSION["tipo"] == 'admin'){
 							echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
-							echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax</a></td>";
+							echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax/JS</a></td>";
+							echo "<td><a href='#' class='btnBorrar' idIncidencia='".$incidencias->idIncidencia."'>Borrar por Ajax/jQuery</a></td>";
 						}
 					}
 				echo "</tr>";
@@ -116,7 +134,7 @@
 		}else if($_SESSION["tipo"] == "user"){
 			foreach($data['listaIncidencias'] as $incidencias) {
 				if($incidencias->idUsuario == $_SESSION["idUsuario"]){
-					echo "<tr>";
+					echo "<tr id='incidencia".$incidencias->idIncidencia."'>";
 						echo "<td>".$incidencias->fecha."</td>";
 						echo "<td>".$incidencias->lugar."</td>";
 						echo "<td>".$incidencias->equipo."</td>";
@@ -129,7 +147,8 @@
 							echo "<td><a href='index.php?action=formularioModificarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Modificar</a></td>";
 							if($_SESSION["tipo"] == 'admin'){
 								echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
-								echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax</a></td>";
+								echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax/JS</a></td>";
+								echo "<td><a href='#' class='btnBorrar' idIncidencia='".$incidencias->idIncidencia."'>Borrar por Ajax/jQuery</a></td>";
 							}
 						}
 					echo "</tr>";
