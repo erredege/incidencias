@@ -28,8 +28,10 @@
 
 	$(document).ready(function() {
 		$(".btnBorrar").click(function() {
-			$.get("index.php?action=borrarIncidenciaAjax&idIncidencia=" + this.idIncidencia, null, function(idIncidenciaBorrado) {
-				if (idIncidenciaBorrado == -1) {
+			$.get("index.php?action=borrarIncidenciaAjax&idIncidencia=" + this.idIncidencia, null, function(idIncidenciaBorrada) {
+				alert(idIncidenciaBorrada);
+				
+				if (idIncidenciaBorrada == -1) {
 					$('#msjError').html("Ha ocurrido un error al borrar la incidencia");
 				}
 				else {
