@@ -28,15 +28,14 @@
 
 	$(document).ready(function() {
 		$(".btnBorrar").click(function() {
-			$.get("index.php?action=borrarIncidenciaAjax&idIncidencia=" + this.idIncidencia, null, function(idIncidenciaBorrada) {
-				alert(idIncidenciaBorrada);
-				
+			$.get("index.php?action=borrarIncidenciaAjax&idIncidencia=" + this.id, null, function(idIncidenciaBorrada) {
+	
 				if (idIncidenciaBorrada == -1) {
 					$('#msjError').html("Ha ocurrido un error al borrar la incidencia");
 				}
 				else {
 					$('#msjInfo').html("Incidencia borrada con éxito");
-					$('#incidencia' + idIncidencia).remove();
+					$('#incidencia' + idIncidenciaBorrada).remove();
 				}
 			});
 		});
@@ -128,7 +127,7 @@
 						if($_SESSION["tipo"] == 'admin'){
 							echo "<td><a href='index.php?action=borrarIncidencia&idIncidencia=".$incidencias->idIncidencia."'>Borrar</a></td>";
 							echo "<td><a href='#' onclick='borrarPorAjax(".$incidencias->idIncidencia.")'>Borrar por Ajax/JS</a></td>";
-							echo "<td><a href='#' class='btnBorrar' idIncidencia='".$incidencias->idIncidencia."'>Borrar por Ajax/jQuery</a></td>";
+							echo "<td><a href='#' class='btnBorrar' id='".$incidencias->idIncidencia."'>Borrar por Ajax/jQuery</a></td>";
 						}
 					}
 				echo "</tr>";

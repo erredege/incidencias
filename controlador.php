@@ -73,7 +73,7 @@
 				// Vamos a procesar el formulario de alta de libros
 				// Primero, recuperamos todos los datos del formulario
 				// Ahora insertamos el libro en la BD
-				$result = $this->incidencia->insert($fecha, $lugar, $equipo, $observaciones,  $estado, $descripcion);
+				$result = $this->incidencia->insert($fecha, $lugar, $equipo, $observaciones, $estado, $descripcion);
 
 				// Lanzamos el INSERT contra la BD.
 				if ($result == 1) {
